@@ -1,32 +1,46 @@
-import styled from "styled-components";
+import React from "react";
+import styles from "./Button.module.css"; // css 모듈 사용하는 법
 
-const Button = styled.button`
-  font: inherit;
-  padding: 0.5rem 1.5rem;
-  border: 1px solid #8b005d;
-  color: white;
-  background: #8b005d;
-  box-shadow: 0 0 4px rgba(0, 0, 0, 0.26);
-  cursor: pointer;
+// import styled from "styled-components";
 
-  &:focus {
-    outline: none;
-  }
+// const Button = styled.button`
+//   font: inherit;
+//   width: 100%;
+//   padding: 0.5rem 1.5rem;
+//   border: 1px solid #8b005d;
+//   color: white;
+//   background: #8b005d;
+//   box-shadow: 0 0 4px rgba(0, 0, 0, 0.26);
+//   cursor: pointer;
 
-  &:hover,
-  &:active {
-    background: #ac0e77;
-    border-color: #ac0e77;
-    box-shadow: 0 0 8px rgba(0, 0, 0, 0.26);
-  }
-`;
+//   @media (min-width: 768px) {
+//     width: auto;
+//   }
 
-// const Button = props => {
-//   return (
-//     <button type={props.type} className="button" onClick={props.onClick}>
-//       {props.children}
-//     </button>
-//   );
-// };
+//   &:focus {
+//     outline: none;
+//   }
+
+//   &:hover,
+//   &:active {
+//     background: #ac0e77;
+//     border-color: #ac0e77;
+//     box-shadow: 0 0 8px rgba(0, 0, 0, 0.26);
+//   }
+// `;
+
+const Button = (props) => {
+  // styles라는 객체 안에 button.module.css의 내용이 담겨있고
+  // 그 안의 class 등을 이용해 스타일을 줄 수 있다
+
+  return (
+    <button
+      type={props.type}
+      className={styles.button}
+      onClick={props.onClick}>
+      {props.children}
+    </button>
+  );
+};
 
 export default Button;

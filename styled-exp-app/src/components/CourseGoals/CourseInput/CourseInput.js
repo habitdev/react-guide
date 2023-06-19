@@ -1,47 +1,10 @@
-import React, { useState } from "react";
-// import styled from "styled-components";
+import React, { useState } from 'react';
 
-import Button from "../../UI/Button/Button";
-import styles from "./CourseInput.module.css";
-
-// const FormControl = styled.div`
-//   margin: 0.5rem 0;
-
-//   & label {
-//     font-weight: bold;
-//     display: block;
-//     margin-bottom: 0.5rem;
-//     color: ${(props) => (props.isValidCheck ? "red" : "black")}
-//   }
-
-//   & input {
-//     display: block;
-//     width: 100%;
-//     border: 1px solid ${(props) => (props.isValidCheck ? "red" : "#ccc")};
-//     background: ${(props) => (props.isValidCheck ? "#ffd7d7" : "transparent")}
-//     font: inherit;
-//     line-height: 1.5rem;
-//     padding: 0 0.25rem;
-//   }
-
-//   & input:focus {
-//     outline: none;
-//     background: #fad0ec;
-//     border-color: #8b005d;
-//   }
-
-//   ${'' /* &.invalid input {
-//     border-color: red;
-//     background: #ffd7d7;
-//   }
-
-//   &.invalid label {
-//     color: red;
-//   } */}
-// `;
+import Button from '../../UI/Button/Button';
+import styles from './CourseInput.module.css';
 
 const CourseInput = (props) => {
-  const [enteredValue, setEnteredValue] = useState("");
+  const [enteredValue, setEnteredValue] = useState('');
   const [isValid, setIsValid] = useState(true);
 
   const goalInputChangeHandler = (event) => {
@@ -62,17 +25,13 @@ const CourseInput = (props) => {
 
   return (
     <form onSubmit={formSubmitHandler}>
-      {/* <FormControl className={!isValid && 'invalid'}> */}
-      {/* <FormControl isValidCheck={!isValid}> */}
-      {/* <div className={styles.form-control}>로 작성하면 오류가 생기므로 아래와 같이 작성한다 */}
-      <div className={`${styles["form-control"]} ${!isValid && styles.invalid}`}>
+      <div
+        className={`${styles['form-control']} ${!isValid && styles.invalid}`}
+      >
         <label>Course Goal</label>
-        <input
-          type='text'
-          onChange={goalInputChangeHandler}
-        />
+        <input type="text" onChange={goalInputChangeHandler} />
       </div>
-      <Button type='submit'>Add Goal</Button>
+      <Button type="submit">Add Goal</Button>
     </form>
   );
 };

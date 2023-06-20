@@ -8,7 +8,8 @@ import classes from './AddUser.module.css';
 
 const AddUser = (props) => {
   // useRef: 리렌더링할 필요없이 value만 바꾸고 싶을 경우 사용
-  // useRef은 항상 객체이다
+  // useRef은 항상 객체이다, 제어되지 않는 컴포넌트(react로 제어하지 X)
+  // state로 했던 방식이 제어되는 컴포넌트 방식(react로 제어하지 O)
   const nameInputRef = useRef();
   const ageInputRef = useRef();
 

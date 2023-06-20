@@ -11,12 +11,18 @@ const Login = (props) => {
   const [passwordIsValid, setPasswordIsValid] = useState();
   const [formIsValid, setFormIsValid] = useState(false);
 
-  // 의존성을 없애면 무한루프가 일어난다
-  // 의존성에는 사이드 이펙트에서 사용한 것을 추가하면 된다
-  // 의존성에 해당하는 것들이 렌더링 주기에서 변경된 경우만 실행
-  // setFormIsValid(state)는 변경이 되지 않음을 리액트에 의해 보장되므로 생략 가능
+  // cleanUp 함수
+  // return되는 것은 반드시 함수여야 한다
   useEffect(() => {
-    setFormIsValid(enteredEmail.includes('@') && enteredPassword.trim().length > 6);
+    const identifier = setTimeout(() => {
+      console.log('setFormIsValid');
+      setFormIsValid(enteredEmail.includes('@') && enteredPassword.trim().length > 6);
+    }, 500);
+
+    return () => {
+      console.log('CLEANUP');
+      clearTimeout(identifier);
+    };
   }, [enteredEmail, enteredPassword]);
 
   const emailChangeHandler = (event) => {

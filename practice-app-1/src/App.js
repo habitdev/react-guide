@@ -14,7 +14,7 @@ function App() {
   return (
     <div>
       <AddUser onAddUser={onAddUserHandler} />
-      <UserList users={usersList} />
+      {usersList.length !== 0 && <UserList users={usersList} />}
     </div>
   );
 }

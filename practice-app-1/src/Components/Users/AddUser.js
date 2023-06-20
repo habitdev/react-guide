@@ -40,13 +40,18 @@ function AddUser(props) {
   const ageChangeHandler = (event) => {
     setEnteredAge(event.target.value);
   };
+  const errorHandler = () => {
+    // error 초기화
+    setError(null);
+  };
 
   return (
     <div>
       {error && (
         <ErrorModal
-          title='An error occured!'
-          message='Something went wrong!'
+          title={error.title}
+          message={error.message}
+          onConfirm={errorHandler}
         />
       )}
       <Card className={classes.input}>

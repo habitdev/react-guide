@@ -34,10 +34,11 @@ function App() {
     <AuthContext.Provider
       value={{
         isLoggedIn: isLoggedIn, // useState에서 isLoggedIn사용
+        onLogout: logoutHandler
       }}>
       <MainHeader
         // isAuthenticated={isLoggedIn}
-        onLogout={logoutHandler}
+        // onLogout={logoutHandler}
       />
       <main>
         {!isLoggedIn && <Login onLogin={loginHandler} />}

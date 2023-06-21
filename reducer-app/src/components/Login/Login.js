@@ -1,8 +1,9 @@
-import React, { useState, useEffect, useReducer } from 'react';
+import React, { useState, useEffect, useReducer, useContext } from 'react';
 
 import Card from '../UI/Card/Card';
 import classes from './Login.module.css';
 import Button from '../UI/Button/Button';
+import AuthContext from '../../store/auth-context';
 
 // 컴포넌트 안의 어떤 것과도 상호작용이 일어나지 않으므로
 // 컴포넌트 밖에 선언하는 것이 좋다
@@ -43,7 +44,9 @@ const Login = (props) => {
     isValid: null,
   });
 
-  // 객체 디스트럭처링?을 사용하여 =(등호)에 해당하는 객체에서 
+  const authCtx = useContext(AuthContext);
+
+  // 객체 디스트럭처링?을 사용하여 =(등호)에 해당하는 객체에서
   // 왼쪽의 value가 가진 값을 오른쪽에 넣는다
   const { isValid: emailIsValid } = emailState;
   const { isValid: passwordIsValid } = passwordState;
@@ -94,7 +97,7 @@ const Login = (props) => {
 
   const submitHandler = (event) => {
     event.preventDefault();
-    props.onLogin(emailState.value, passwordState.value);
+    authCtx.onLogin(emailState.value, passwordState.value);
   };
 
   return (

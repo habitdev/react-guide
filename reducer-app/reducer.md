@@ -36,3 +36,14 @@ useEffect(()=> {...}, [ dependencies ])
     };
   }, [enteredEmail, enteredPassword]);
   ```
+
+## useReducer()
+`state`관리를 도와줌 `useState()`와 약간 비슷하다
+복잡한 `state`관리에 좋다
+```js
+const [state, dispatch] = useReducer(reducer, initialArg, init?)
+```
+- useState의 대체 함수입니다. (state, action) => newState의 형태로 reducer를 받고 dispatch 메서드와 짝의 형태로 현재 state를 반환합니다.
+- 이전의 state를 이용하여 다른 state를 만들 경우 유용하다
+- `state`: 스냅샷, `dispatch`: 스냅샷을 업데이트할 수 있게 해주는 함수
+- 새로 업데이트된 state를 반환한다

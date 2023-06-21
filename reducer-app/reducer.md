@@ -47,3 +47,14 @@ const [state, dispatch] = useReducer(reducer, initialArg, init?)
 - 이전의 state를 이용하여 다른 state를 만들 경우 유용하다
 - `state`: 스냅샷, `dispatch`: 스냅샷을 업데이트할 수 있게 해주는 함수
 - 새로 업데이트된 state를 반환한다
+
+## useState()와 useReducer()는 언제 사용하나?
+### useState()
+- 주요 state 관리도구
+- 개별 state/data 관리 및 간단한 state관리
+- state 업데이트가 쉽고 몇 종류 안되는 경우 적합
+
+### useReducer()
+- state가 객체이거나 복작할 경우 사용
+- 연관된 state/데이터의 조각을 다룰 때
+- state를 변경하는 여러 액션이 있을 경우

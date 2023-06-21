@@ -8,3 +8,9 @@
 
 `Provider`: 하위의 모든 prop를 저장하고자 한다면 사용
 `Consumer`:`Provider`에 저장한 prop을 사용하려면 `Consumer`로 감싼다
+
+## useContext 훅
+```js
+const ctx = useContext(AuthContext);
+```
+`props` 대신 `ctx`를 참조하며 `ctx`에 `AuthContext` 컴포넌트 안의 값을 넣는다

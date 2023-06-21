@@ -43,6 +43,11 @@ const Login = (props) => {
     isValid: null,
   });
 
+  // 객체 디스트럭처링?을 사용하여 =(등호)에 해당하는 객체에서 
+  // 왼쪽의 value가 가진 값을 오른쪽에 넣는다
+  const { isValid: emailIsValid } = emailState;
+  const { isValid: passwordIsValid } = passwordState;
+
   useEffect(() => {
     console.log('EFFECT RUNNING');
 
@@ -51,28 +56,32 @@ const Login = (props) => {
     };
   }, []);
 
-  // useEffect(() => {
-  //   const identifier = setTimeout(() => {
-  //     console.log('setFormIsValid');
-  //     setFormIsValid(enteredEmail.includes('@') && enteredPassword.trim().length > 6);
-  //   }, 500);
+  // 이미 유효성 검사를 통과한 글자에서 추가로 입력을 해도 실행이 되므로
+  // 이를 수정해야 한다
+  // => 유효성이 바뀐 경우에만 실행
+  useEffect(() => {
+    console.log(emailIsValid, passwordIsValid);
+    const identifier = setTimeout(() => {
+      // console.log('setFormIsValid');
+      setFormIsValid(emailIsValid && passwordIsValid);
+    }, 500);
 
-  //   return () => {
-  //     console.log('CLEANUP');
-  //     clearTimeout(identifier);
-  //   };
-  // }, [enteredEmail, enteredPassword]);
+    return () => {
+      // console.log('CLEANUP');
+      clearTimeout(identifier);
+    };
+  }, [emailIsValid, passwordIsValid]);
 
   const emailChangeHandler = (event) => {
     dispatchEmail({ type: 'USER_INPUT', val: event.target.value });
 
-    setFormIsValid(event.target.value.includes('@') && passwordState.isValid);
+    // setFormIsValid(event.target.value.includes('@') && passwordState.isValid);
   };
 
   const passwordChangeHandler = (event) => {
     dispatchPassword({ type: 'USER_INPUT', val: event.target.value });
 
-    setFormIsValid(emailState.isValid && event.target.value.trim().length > 6);
+    // setFormIsValid(emailState.isValid && event.target.value.trim().length > 6);
   };
 
   const validateEmailHandler = () => {

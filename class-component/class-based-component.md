@@ -118,3 +118,9 @@ export default App;
 `componentDidUpdate()`: 컴포넌트가 갱신된 경우: useEffect(..., [someValue])
 `componentWillUnmount()`: 컴포넌트가 DOM에서 삭제되기 직전에 호출: useEffect(()=> {return () => {}}, [someValue]) // cleanUp
 등등
+
+
+## 오류 경계 
+`ErrorBoundary`는 `componentDidCatch()` 생명주기 메소드를 활용하여
+오류를 찾는 것
+함수형 컴포넌트에선 사용할 수 없다

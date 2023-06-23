@@ -11,7 +11,7 @@ function MealItem(props) {
     cartCtx.addItem({
       id: props.id,
       name: props.name,
-      amount: amount,
+      amount: Number(amount),
       price: props.price,
     });
   };

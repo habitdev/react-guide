@@ -9,7 +9,7 @@ function HeaderCartButton(props) {
   // reduce로 실행하는 함수는 두 개의 인수를 받는다
   const cartCtx = useContext(CartContext);
   const numberOfCartItems = cartCtx.items.reduce((curNumber, item) => {
-    return curNumber + Number(item.amount);
+    return curNumber + item.amount;
   }, 0);
 
   return (

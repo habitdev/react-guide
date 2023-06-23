@@ -11,10 +11,24 @@ const defaultCartState = {
  * @param {*} action: 코드에 전달되는 액션
  */
 function cartReducer(state, action) {
+  console.log(state, action);
   if (action.type === 'ADD') {
-    // concat(): 추가된 항목을 새로운 배열에 담아 반환해준다
-    const updatedItems = state.items.concat(action.item);
     const updatedAmount = state.totalAmount + action.item.price * action.item.amount;
+
+    const existingCartItemIndex = state.items.findIndex((item) => item.id === action.item.id);
+    const existingCartItem = state.items[existingCartItemIndex];
+    let updatedItems;
+
+    if (existingCartItem) {
+      const updatedItem = {
+        ...existingCartItem,
+        amount: Number(existingCartItem.amount) + Number(action.item.amount),
+      };
+      updatedItems = [...state.items];
+      updatedItems[existingCartItemIndex] = updatedItem;
+    } else {
+      updatedItems = state.items.concat(action.item);
+    }
 
     return {
       items: updatedItems,

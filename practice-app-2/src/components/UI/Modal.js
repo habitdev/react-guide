@@ -17,7 +17,6 @@ function ModalOverlay(props) {
 const portalElement = document.getElementById('overlays');
 
 function Modal(props) {
-  console.log(props.onClose);
   return (
     // portal을 사용하지 않는다면 아래와 같이 작성하여도 괜찮다
     // <Fragment>

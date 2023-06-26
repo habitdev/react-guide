@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 
 import MoviesList from './components/MoviesList';
 import './App.css';
@@ -8,13 +8,13 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  async function fetchMovieHandler() {
+  const fetchMovieHandler = useCallback(async () => {
     setIsLoading(true);
     setError(null);
     // async & await를 사용하면 error는 fetch.catch()가 아닌
     // try ~ catch()를 이용해야 한다.
     try {
-      const response = await fetch('https://swapi.dev/api/film/');
+      const response = await fetch('https://swapi.dev/api/films/');
       if (!response.ok) {
         throw new Error('something went wrong🔧');
       }
@@ -34,7 +34,17 @@ function App() {
       setError(error.message);
     }
     setIsLoading(false);
-  }
+  }, []);
+
+  useEffect(() => {
+    fetchMovieHandler();
+    // fetchMovieHandler함수가 버튼을 누를 때도 호출되지만
+    // 컴포넌트가 재평가될 때도 호출된다(처음 로딩 포함)
+    // 의존성을 비워두면 처음 로딩이후론 실행이 안된다
+  }, [fetchMovieHandler]);
+  // fetchMovieHandler을 의존성으로 넣으면
+  // movieList가 변할 때마다 불러오지만
+  // 무한루프가 생길 수 있으므로 useCallback을 사용한다
 
   let content = <p>No datas...</p>;
   if (movies.length > 0) {

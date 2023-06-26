@@ -6,32 +6,45 @@ import './App.css';
 function App() {
   const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-  async function fetchMovieHander() {
+  async function fetchMovieHandler() {
     setIsLoading(true);
-    const response = await fetch('https://swapi.dev/api/films/');
-    const data = await response.json();
+    setError(null);
+    // async & await를 사용하면 error는 fetch.catch()가 아닌
+    // try ~ catch()를 이용해야 한다.
+    try {
+      const response = await fetch('https://swapi.dev/api/films/');
+      if (!response.ok) {
+        throw new Error('something went wrong🔧');
+      }
 
-    const transformedMovies = data.results.map((movieData) => {
-      return {
-        id: movieData.episode_id,
-        title: movieData.title,
-        openingText: movieData.opening_crawl,
-        releaseDate: movieData.release_date,
-      };
-    });
-    setMovies(transformedMovies);
+      const data = await response.json();
+      const transformedMovies = data.results.map((movieData) => {
+        return {
+          id: movieData.episode_id,
+          title: movieData.title,
+          openingText: movieData.opening_crawl,
+          releaseDate: movieData.release_date,
+        };
+      });
+      setMovies(transformedMovies);
+    } catch (error) {
+      console.log(error);
+      setError(error.message);
+    }
     setIsLoading(false);
   }
 
   return (
     <React.Fragment>
       <section>
-        <button onClick={fetchMovieHander}>Fetch Movies</button>
+        <button onClick={fetchMovieHandler}>Fetch Movies</button>
       </section>
       <section>
         {!isLoading && movies.length > 0 && <MoviesList movies={movies} />}
-        {!isLoading && movies.length === 0 && <p>No datas</p>}
+        {!isLoading && !error && movies.length === 0 && <p>No datas...</p>}
+        {!isLoading && error && <p>{error}</p>}
         {isLoading && <p>Loading...</p>}
       </section>
     </React.Fragment>

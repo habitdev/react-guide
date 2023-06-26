@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 
+import AddMovie from './components/AddMovie';
 import MoviesList from './components/MoviesList';
 import './App.css';
 
@@ -14,13 +15,25 @@ function App() {
     // async & await를 사용하면 error는 fetch.catch()가 아닌
     // try ~ catch()를 이용해야 한다.
     try {
-      const response = await fetch('https://swapi.dev/api/films/');
+      // firebase 연결
+      const response = await fetch('https://react-guide-http-cde47-default-rtdb.firebaseio.com/movies.json');
       if (!response.ok) {
         throw new Error('something went wrong🔧');
       }
 
       const data = await response.json();
-      const transformedMovies = data.results.map((movieData) => {
+      console.log(data);
+      const loadedMovies = [];
+      for (const key in data) {
+        loadedMovies.push({
+          id: key,
+          title: data[key].title,
+          openingText: data[key].openingText,
+          releaseDate: data[key].release_date,
+        });
+      }
+      /*
+      const transformedMovies = data.map((movieData) => {
         return {
           id: movieData.episode_id,
           title: movieData.title,
@@ -29,6 +42,8 @@ function App() {
         };
       });
       setMovies(transformedMovies);
+      */
+      setMovies(loadedMovies);
     } catch (error) {
       console.log(error);
       setError(error.message);
@@ -46,6 +61,19 @@ function App() {
   // movieList가 변할 때마다 불러오지만
   // 무한루프가 생길 수 있으므로 useCallback을 사용한다
 
+  async function addMovieHandler(movie) {
+    // console.log(movie);
+    const response = await fetch('https://react-guide-http-cde47-default-rtdb.firebaseio.com/movies.json', {
+      method: 'POST',
+      body: JSON.stringify(movie),
+      headers: {
+        'Content-type': 'application/json',
+      },
+    });
+    const data = await response.json();
+    console.log(data);
+  }
+
   let content = <p>No datas...</p>;
   if (movies.length > 0) {
     content = <MoviesList movies={movies} />;
@@ -59,6 +87,10 @@ function App() {
 
   return (
     <React.Fragment>
+      <section>
+        <AddMovie onAddMovie={addMovieHandler} />
+      </section>
+
       <section>
         <button onClick={fetchMovieHandler}>Fetch Movies</button>
       </section>

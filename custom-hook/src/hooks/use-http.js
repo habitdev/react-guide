@@ -26,6 +26,7 @@ function useHttp() {
     }
     setIsLoading(false);
   });
+  // 매개변수로 외부의 변화되는 값을 받으면 의존성이 필요없다
 
   return {
     isLoading: isLoading,

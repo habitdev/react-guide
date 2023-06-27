@@ -1,7 +1,6 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const SimpleInput = (props) => {
-  const nameInputRef = useRef();
   const [enteredName, setEnteredName] = useState('');
   const [enteredNameIsValid, setEnteredNameIsValid] = useState(false);
   // useEffect를 사용할 경우 true로 설정되면 아무것도 입력하지 않았음에도 http로 전송되므로 잘못되었다
@@ -40,7 +39,6 @@ const SimpleInput = (props) => {
 
     console.log(enteredName);
     setEnteredNameIsValid(true);
-    const enteredValue = nameInputRef.current.value;
     setEnteredName('');
     // nameInputRef.current.value = ''
     // 절대로 사용하지 말 것!
@@ -56,7 +54,6 @@ const SimpleInput = (props) => {
         <input
           type='text'
           id='name'
-          ref={nameInputRef}
           value={enteredName}
           onChange={nameInputChangeHandler}
           onBlur={nameInputBlurHandler}

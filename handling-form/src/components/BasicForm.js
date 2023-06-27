@@ -47,9 +47,9 @@ const BasicForm = (props) => {
     }
 
     console.log(firstNameValue, lastNameValue, emailValue);
-    resetFirstName()
-    resetLastName()
-    resetEmail()
+    resetFirstName();
+    resetLastName();
+    resetEmail();
   }
 
   return (

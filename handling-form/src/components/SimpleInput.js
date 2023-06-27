@@ -2,49 +2,30 @@ import { useEffect, useState } from 'react';
 
 const SimpleInput = (props) => {
   const [enteredName, setEnteredName] = useState('');
-  const [enteredNameIsValid, setEnteredNameIsValid] = useState(false);
-  // useEffect를 사용할 경우 true로 설정되면 아무것도 입력하지 않았음에도 http로 전송되므로 잘못되었다
   const [enteredNameTouched, setEnteredNameTouched] = useState(false);
-  useEffect(() => {
-    if (enteredNameIsValid) {
-      console.log('Name Input is valid!');
-    }
-  }, [enteredNameIsValid]);
+
+  const enteredNameIsValid = enteredName.trim() !== '';
+  const nameInputInvalid = !enteredNameIsValid && enteredNameTouched;
 
   function nameInputChangeHandler(event) {
-    // console.log(event.target.value);
     setEnteredName(event.target.value);
-
-    if (event.target.value.trim() !== '') {
-      setEnteredNameIsValid(true);
-      return;
-    }
   }
+
   function nameInputBlurHandler(event) {
     setEnteredNameTouched(true);
-    if (enteredName.trim() === '') {
-      setEnteredNameIsValid(false);
-      return;
-    }
   }
+
   function formSubmitHandler(event) {
     event.preventDefault();
     setEnteredNameTouched(true);
-
-    if (enteredName.trim() === '') {
-      setEnteredNameIsValid(false);
-
+    if (!enteredNameIsValid) {
       return;
     }
-
-    console.log(enteredName);
-    setEnteredNameIsValid(true);
+    // 폼 제출 후
     setEnteredName('');
-    // nameInputRef.current.value = ''
-    // 절대로 사용하지 말 것!
+    setEnteredNameTouched(false);
   }
 
-  const nameInputInvalid = !enteredNameIsValid && enteredNameTouched;
   const nameInputClasses = nameInputInvalid ? 'form-control invalid' : 'form-control';
 
   return (

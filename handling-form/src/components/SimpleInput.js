@@ -32,8 +32,8 @@ const SimpleInput = (props) => {
     }
 
     // 폼 제출 후
-    resetNameInput('');
-    resetEmailInput('');
+    resetNameInput();
+    resetEmailInput();
   }
 
   const nameInputClasses = nameInputHasError ? 'form-control invalid' : 'form-control';

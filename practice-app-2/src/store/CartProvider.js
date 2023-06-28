@@ -11,7 +11,6 @@ const defaultCartState = {
  * @param {*} action: 코드에 전달되는 액션
  */
 function cartReducer(state, action) {
-  console.log(state, action);
   if (action.type === 'ADD') {
     const updatedAmount = state.totalAmount + action.item.price * action.item.amount;
 

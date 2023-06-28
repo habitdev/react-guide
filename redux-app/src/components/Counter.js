@@ -1,5 +1,6 @@
 import { Component, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { countActions } from '../store';
 import classes from './Counter.module.css';
 
 // 함수형이 아닌 클래스 컴포넌트의 경우 useSelector/useStore가 아니라
@@ -11,18 +12,20 @@ const Counter = () => {
   const show = useSelector((state) => state.showCounter);
 
   const incrementHandler = () => {
-    dispatch({ type: 'increment' });
     // dispatch({ type: INCREMENT });
+    dispatch(countActions.increment());
   };
   const increaseHandler = () => {
-    dispatch({ type: 'increase', amount: 5 });
+    // dispatch(countActions.increase({ amount: 5 }));
+    dispatch(countActions.increase(5));
+    // {type: 'ID', payload: }
   };
   const decrementHandler = () => {
-    dispatch({ type: 'decrement' });
+    dispatch(countActions.decrement());
   };
 
   const toggleCounterHandler = () => {
-    dispatch({ type: 'toggle' });
+    dispatch(countActions.toggleCounter());
   };
 
   return (

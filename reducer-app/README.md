@@ -1,70 +1,60 @@
-# Getting Started with Create React App
+# Reducer
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Side Effects
 
-## Available Scripts
+- 애플리케이션에서 일어나는 다른 모든 것(렌더링을 제외한 모든 것)
+- 사이드 이펙트는 컴포넌트에 들어가면 안된다. 버그나 무한 루프가 발생할 가능성이 높기 때문이다.
+  => useEffect를 사용
 
-In the project directory, you can run:
+- 종류)
+- http 리퀘스트
+- 키 입력을 듣고 입력된 데이터 저장
+- 그에 대한 응답으로 다른 액션을 실행하는 것
 
-### `npm start`
+```js
+useEffect(()=> {...}, [ dependencies ])
+```
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- 첫번째 인수는 함수로, 지정된 의존성이 변경된 경우에 모든 컴포넌트 평가 후 실행되어야 하는 함수이다
+- 의존성은 두번째 인수에 넣는다
+- 리액트가 리렌더링될 때 실행되는 것이 아닌 의존성이 변경될 때마다 첫번째 함수가 다시 실행된다
+- `useEffect(()=> {...})`와 같이 의존성을 입력하지 않으면 리액트가 렌더링 될 때마다 실행된다
+- `useEffect(()=> {...}, [])`와 같이 입력한다면 처음 렌더링 시에만 실행된다
+- cleanUp 함수는 반드시 함수로 return되어야 한다
+- cleanUp 함수는 처음 렌더링 시엔 실행되지 않고 두번째부터 실행된다
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+  ```js
+  useEffect(() => {
+    const identifier = setTimeout(() => {
+      console.log('setFormIsValid');
+      setFormIsValid(enteredEmail.includes('@') && enteredPassword.trim().length > 6);
+    }, 500);
 
-### `npm test`
+    return () => { // cleanUp 함수
+      console.log('CLEANUP');
+      clearTimeout(identifier);
+    };
+  }, [enteredEmail, enteredPassword]);
+  ```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## useReducer()
+`state`관리를 도와줌 `useState()`와 약간 비슷하다
+복잡한 `state`관리에 좋다
+```js
+const [state, dispatch] = useReducer(reducer, initialArg, init?)
+```
+- useState의 대체 함수입니다. (state, action) => newState의 형태로 reducer를 받고 dispatch 메서드와 짝의 형태로 현재 state를 반환합니다.
+- 이전의 state를 이용하여 다른 state를 만들 경우 유용하다
+- `state`: 스냅샷, `dispatch`: 스냅샷을 업데이트할 수 있게 해주는 함수
+- 새로 업데이트된 state를 반환한다
 
-### `npm run build`
+## useState()와 useReducer()는 언제 사용하나?
+### useState()
+- 주요 state 관리도구
+- 개별 state/data 관리 및 간단한 state관리
+- state 업데이트가 쉽고 몇 종류 안되는 경우 적합
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### useReducer()
+- state가 객체이거나 복작할 경우 사용
+- 연관된 state/데이터의 조각을 다룰 때
+- state를 변경하는 여러 액션이 있을 경우

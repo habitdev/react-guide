@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import { Fragment, useContext, useState } from 'react';
 import CartContext from '../../store/cart-context';
 import classes from './Cart.module.css';
 import Modal from '../UI/Modal';
@@ -10,6 +10,8 @@ function Cart(props) {
   const totalAmount = `$${cartCtx.totalAmount.toFixed(2)}`;
   const hasItems = cartCtx.items.length > 0;
   const [isCheckout, setIsCheckout] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [didSubmit, setDidSubmit] = useState(false);
 
   const cartItemRemoveHandler = (id) => {
     cartCtx.removeItem(id);
@@ -21,14 +23,18 @@ function Cart(props) {
     setIsCheckout(true);
   };
 
-  const submitOrderHandler = (userData) => {
-    fetch('https://react-guide-http-cde47-default-rtdb.firebaseio.com/orders.json', {
+  const submitOrderHandler = async (userData) => {
+    setIsSubmitting(true);
+    await fetch('https://react-guide-http-cde47-default-rtdb.firebaseio.com/orders.json', {
       method: 'POST',
       body: JSON.stringify({
         user: userData,
         orderItems: cartCtx.items,
       }),
     });
+    setIsSubmitting(false);
+    setDidSubmit(true);
+    cartCtx.clearCart(); // 장바구니 초기화
   };
 
   const cartItems = (
@@ -69,8 +75,8 @@ function Cart(props) {
     </div>
   );
 
-  return (
-    <Modal onClose={props.onClose}>
+  const cartModalContent = (
+    <Fragment>
       {cartItems}
       <div className={classes.total}>
         <span>Total Amount</span>
@@ -83,6 +89,33 @@ function Cart(props) {
         />
       )}
       {!isCheckout && modalActions}
+    </Fragment>
+  );
+
+  const isSubmittingModalContent = <p>Sending order data...</p>;
+  const didSubmitModalContent = (
+    <Fragment>
+      <p>Successfully sent the order!</p>
+      <div className={classes.actions}>
+        <button
+          type='button'
+          className={classes.button}
+          onClick={props.onClose}
+        >
+          Close
+        </button>
+      </div>
+    </Fragment>
+  );
+
+  return (
+    <Modal onClose={props.onClose}>
+      {/* 정보 보내기 이전 */}
+      {!isSubmitting && !didSubmit && cartModalContent}
+      {/* 정보 보내는 중 */}
+      {isSubmitting && isSubmittingModalContent}
+      {/* 정보 보내기 완료 */}
+      {!isSubmitting && didSubmit && didSubmitModalContent}
     </Modal>
   );
 }

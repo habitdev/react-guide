@@ -54,8 +54,12 @@ function cartReducer(state, action) {
 
     return {
       items: updatedItems,
-      totalAmount: updatedTotalAmount
-    }
+      totalAmount: updatedTotalAmount,
+    };
+  }
+
+  if (action.type === 'CLEAR') {
+    return defaultCartState;
   }
 
   // 새 state 스냅샷 반환
@@ -72,12 +76,16 @@ function CartProvider(props) {
   const removeItemFromCartHandler = (id) => {
     dispatchCartAction({ type: 'REMOVE', id: id });
   };
+  const clearCartHandler = () => {
+    dispatchCartAction({type: 'CLEAR'})
+  };
   const cartContext = {
     // 기본값
     items: cartState.items,
     totalAmount: cartState.totalAmount,
     addItem: addItemToCartHandler,
     removeItem: removeItemFromCartHandler,
+    clearCart: clearCartHandler
   };
   return <CartContext.Provider value={cartContext}>{props.children}</CartContext.Provider>;
 }

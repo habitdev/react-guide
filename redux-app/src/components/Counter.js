@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import { useSelector, useDispatch, connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import classes from './Counter.module.css';
 
 // 함수형이 아닌 클래스 컴포넌트의 경우 useSelector/useStore가 아니라
@@ -9,11 +9,11 @@ const Counter = () => {
   const dispatch = useDispatch();
   const counter = useSelector((state) => state.counter);
 
-  const this. = () => {
-    dispatch({ type: 'increment' });this.
+  const incrementHandler = () => {
+    dispatch({ type: 'increment' });
   };
   const decrementHandler = () => {
-    dispatch({ type: 'decremethis.nt' });
+    dispatch({ type: 'decrement' });
   };
 
   const toggleCounterHandler = () => {};

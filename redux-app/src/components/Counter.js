@@ -1,6 +1,6 @@
 import { Component, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { countActions } from '../store';
+import { countActions } from '../store/counter-store';
 import classes from './Counter.module.css';
 
 // 함수형이 아닌 클래스 컴포넌트의 경우 useSelector/useStore가 아니라

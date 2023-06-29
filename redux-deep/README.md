@@ -4,4 +4,4 @@
   => 컴포넌트(`useEffect()`)
   => `action creators` 안에 생성
 
-
+리듀서 안에는 `http()`와 통신하는 코드를 넣을 수 없다

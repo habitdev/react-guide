@@ -2,6 +2,7 @@ import { createBrowserRouter, RouterProvider, createRoutesFromElements, Route } 
 import Home from './pages/Home';
 import Products from './pages/Products';
 import RootLayout from './pages/Root';
+import Error from './pages/Error';
 
 // 다른방법1)
 /* 
@@ -18,9 +19,10 @@ const router = createBrowserRouter([
   {
     path: '/',
     element: <RootLayout />, // wrapper 역할
+    errorElement: <Error />, // 에러 페이지
     children: [
       { path: '/', element: <Home /> },
-      { path: '/products', element: <Products /> },
+      { path: '/products', element: <Products />  },
     ],
   },
 ]);

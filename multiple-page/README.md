@@ -9,9 +9,9 @@ const router = createBrowserRouter([
     element: <RootLayout />, // wrapper 역할
     errorElement: <Error />, // 에러 페이지
     children: [
-      { path: '/', element: <Home /> },
-      { path: '/products', element: <Products /> },
-      { path: '/products:id', element: <ProductDetail /> },
+      { path: '', element: <Home /> },
+      { path: 'products', element: <Products /> },
+      { path: 'products:id', element: <ProductDetail /> },
     ],
   },
 ]);
@@ -22,6 +22,7 @@ function App() {
 ```
 
 `children`에 있는 `path`는 부모 `path`의 경로를 따라간다(상대경로)
+=> `children`에 있는 `path`의 가장 앞에 `/` 가 있으면 절대경로
 `products/:productId`와 `products/`는 형제이므로
 상위로 가도록 이동하면 `/`로 이동하게 된다
 => relative='route' 도 동일
@@ -37,6 +38,27 @@ const routeDef = createRoutesFromElements(
   </Route>
 ) */
 const router = createBrowserRouter(routeDef)
+
+function App() {
+  return <RouterProvider router={router} />;
+}
+```
+
+### 인덱스 라우트
+경로에 아무것도 없는 `/` 상태일 경우 인덱스 라우트를 사용한다
+```js
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <RootLayout />, // wrapper 역할
+    errorElement: <Error />, // 에러 페이지
+    children: [
+      { index: true, element: <Home /> },
+      { path: 'products', element: <Products /> },
+      { path: 'products:id', element: <ProductDetail /> },
+    ],
+  },
+]);
 
 function App() {
   return <RouterProvider router={router} />;

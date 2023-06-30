@@ -22,7 +22,7 @@ const router = createBrowserRouter([
     element: <RootLayout />, // wrapper 역할
     errorElement: <Error />, // 에러 페이지
     children: [
-      { path: '', element: <Home /> },
+      { index: true, element: <Home /> },
       { path: 'products', element: <Products />  },
       { path: 'products/:productId', element: <ProductDetail />  },
     ],

@@ -3,6 +3,7 @@ import Home from './pages/Home';
 import Products from './pages/Products';
 import RootLayout from './pages/Root';
 import Error from './pages/Error';
+import ProductDetail from './pages/ProductDetail';
 
 // 다른방법1)
 /* 
@@ -23,6 +24,7 @@ const router = createBrowserRouter([
     children: [
       { path: '/', element: <Home /> },
       { path: '/products', element: <Products />  },
+      { path: '/products/:productId', element: <ProductDetail />  },
     ],
   },
 ]);

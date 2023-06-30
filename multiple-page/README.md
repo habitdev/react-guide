@@ -64,3 +64,15 @@ function navigateHandler() {
   </button>
 </p>;
 ```
+
+### 4. 동적인 url
+`:`뒤에 변하는 항목을 입력한다 => `productId`
+```js
+{ path: '/products/:productId', element: <ProductDetail />  },
+```
+
+
+### 5. useParams
+`useParams`은 프로퍼티로 정의한 모든 역동적 경로 세그먼트가 담긴 javascript객체이다
+
+동적으로 만든 세그먼트(`:`)를 식별자로 사용한다

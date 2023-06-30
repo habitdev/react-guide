@@ -1,5 +1,4 @@
 import React from 'react';
-import ProductDetail from './ProductDetail';
 import { Link } from 'react-router-dom';
 
 const PRODUCTS = [
@@ -15,7 +14,7 @@ function Products() {
       <ul>
         {PRODUCTS.map((product) => (
           <li key={product.id}>
-            <Link to={`/products/${product.id}`}>{product.title}</Link>
+            <Link to={`${product.id}`}>{product.title}</Link>
           </li>
         ))}
       </ul>

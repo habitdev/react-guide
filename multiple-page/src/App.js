@@ -1,6 +1,7 @@
 import { createBrowserRouter, RouterProvider, createRoutesFromElements, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import Products from './pages/Products';
+import RootLayout from './pages/Root';
 
 // 다른방법1)
 /* 
@@ -14,8 +15,14 @@ const routeDef = createRoutesFromElements(
 
 // 기본)
 const router = createBrowserRouter([
-  { path: '/', element: <Home /> },
-  { path: '/products', element: <Products /> },
+  {
+    path: '/',
+    element: <RootLayout />, // wrapper 역할
+    children: [
+      { path: '/', element: <Home /> },
+      { path: '/products', element: <Products /> },
+    ],
+  },
 ]);
 
 function App() {

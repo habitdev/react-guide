@@ -1,46 +1,66 @@
-# Getting Started with Create React App and Redux
+# react-router-dom
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) template.
+### 기본 사용법
 
-## Available Scripts
+```js
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <RootLayout />, // wrapper 역할
+    errorElement: <Error />, // 에러 페이지
+    children: [
+      { path: '/', element: <Home /> },
+      { path: '/products', element: <Products /> },
+    ],
+  },
+]);
 
-In the project directory, you can run:
+function App() {
+  return <RouterProvider router={router} />;
+}
+```
 
-### `npm start`
+### 다른 방법1
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+```js
+const routeDef = createRoutesFromElements(
+  <Route>
+    <Route path='/' element={<Home/>} />
+    <Route path='/products' element={<Products/>} />
+  </Route>
+) */
+const router = createBrowserRouter(routeDef)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+function App() {
+  return <RouterProvider router={router} />;
+}
+```
 
-### `npm test`
+## 기능
+### 1. Link
+- `a`태그 대신에 링크를 받는 컴포넌트 `href`대신에 `to`를 사용한다
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
+### 2. NavLink
+- NavLink는 className 속성을 추가할 경우 이는 클래스를 받는 것이 아니라 함수를 받는다
+- 그 함수는 앵커 태그에 추가되어야 하는 css 클래스 이름을 추가할 것이다
+- {isActive}: `react-router-dom`가 제공한다, boolean
+- `end`: url이 to=''안에 있는 글자로 끝나면 true
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### 3. useNavigation
+프로그램 내부에서 링크를 이동시킬 때 사용한다
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+```js
+const navigate = useNavigate(); // 네비게이션 동작 트리거
+function navigateHandler() {
+  navigate('/products');
+}
+<p>
+  <button
+    type='button'
+    onClick={navigateHandler}
+  >
+    Navigate
+  </button>
+</p>;
+```

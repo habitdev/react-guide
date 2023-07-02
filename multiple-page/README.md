@@ -45,7 +45,9 @@ function App() {
 ```
 
 ### 인덱스 라우트
+
 경로에 아무것도 없는 `/` 상태일 경우 인덱스 라우트를 사용한다
+
 ```js
 const router = createBrowserRouter([
   {
@@ -108,5 +110,31 @@ function navigateHandler() {
 ### 5. useParams
 
 `useParams`은 프로퍼티로 정의한 모든 역동적 경로 세그먼트가 담긴 javascript객체이다
-
 동적으로 만든 세그먼트(`:`)를 식별자로 사용한다
+
+### 6. loader
+`loader`는 함수를 값으로 취하는 프로퍼티이다
+```js
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <Root />, // wrapper 역할
+    children: [
+      { index: true, element: <HomePage /> },
+      {
+        path: 'events',
+        element: <EventRoot />,
+        children: [
+          { index: true, element: <EventsPage />, loader: () => {} },
+          { path: ':eventId', element: <EventDetailPage /> },
+          { path: 'new', element: <NewEventPage /> },
+          { path: ':eventId/edit', element: <EditEventPage /> },
+        ],
+      },
+    ],
+  },
+]);
+```
+
+### useLoaderData
+`useLoaderData`는 가장 가까운 `loader`에서 `return`하는 데이터를 받아올 수 있는 특수한 훅이다

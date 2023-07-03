@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useLoaderData } from 'react-router-dom';
+import { json, useLoaderData } from 'react-router-dom';
 
 import EventsList from '../components/EventsList';
 
@@ -38,10 +38,13 @@ export async function loader() {
     // throw new Error();
     // 오류가 생기면 리액트 라우터는 가장 가까운 오류 요소에 접근한다
     //  errorElement: <ErrorPage />,
-    throw new Response(
+    /* throw new Response(
       JSON.stringify({ message: 'Could not fetch events' }),
       { status: 500 }
-    );
+    ); */
+
+    return json({ message: 'Could not fetch events' }, {status: 500});
+    // json 형식의 데이터가 포함된 Response객체를 생성
   } else {
     return response;
   }

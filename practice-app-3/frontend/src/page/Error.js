@@ -12,7 +12,8 @@ function ErrorPage() {
 
   if (error.status === 500) {
     // data는 JSON.stringify()을 통해 받는 data를 말한다
-    message = JSON.parse(error.data).message;
+    // message = JSON.parse(error.data).message;
+    message = error.data.message; // 'react-router-dom'의 json을 이용해 오류를 보내면 parse를 안해도 된다
   }
 
   if (error.status === 404) {

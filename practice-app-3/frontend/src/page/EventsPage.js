@@ -38,7 +38,10 @@ export async function loader() {
     // throw new Error();
     // 오류가 생기면 리액트 라우터는 가장 가까운 오류 요소에 접근한다
     //  errorElement: <ErrorPage />,
-    throw { message: 'Could not fetch events' };
+    throw new Response(
+      JSON.stringify({ message: 'Could not fetch events' }),
+      { status: 500 }
+    );
   } else {
     return response;
   }

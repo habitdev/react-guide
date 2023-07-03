@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+// import { useEffect, useState } from 'react';
 import { json, useLoaderData } from 'react-router-dom';
 
 import EventsList from '../components/EventsList';

@@ -24,7 +24,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import HomePage from './page/HomePage';
 import EventsPage, { loader as eventsLoader } from './page/EventsPage';
 import EventDetailPage, { loader as eventDetailLoader } from './page/EventDetailPage';
-import NewEventPage from './page/NewEventPage';
+import NewEventPage, { action as newEventAction } from './page/NewEventPage';
 import EditEventPage from './page/EditEventPage';
 import ErrorPage from './page/Error';
 import Root from './page/Root';
@@ -48,14 +48,15 @@ const router = createBrowserRouter([
           },
           {
             path: ':eventId',
-            id: 'event-detail', // eventDetailLoader을 공용으로 사용하면 children의 페이지들에서 찾을 수 가 없으므로(useLoaderData의 상위가 해당 페이지이므로) 특별한 임의의 아이디를 부여해야 한다.
+            id: 'event-detail',
             loader: eventDetailLoader,
             children: [
               { index: true, element: <EventDetailPage /> },
               { path: 'edit', element: <EditEventPage /> },
             ],
           },
-          { path: 'new', element: <NewEventPage /> },
+          // action프로퍼티는 함수를 받는다
+          { path: 'new', element: <NewEventPage />, action: newEventAction },
         ],
       },
     ],

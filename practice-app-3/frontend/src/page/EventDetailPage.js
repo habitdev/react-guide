@@ -1,15 +1,27 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { json, useLoaderData } from 'react-router-dom';
+import EventItem from '../components/EventItem';
 
 function EventDetailPage() {
-  const param = useParams();
+  // const param = useParams();
+  const data = useLoaderData();
 
   return (
     <>
-      <h1>Event Detail</h1>
-      {param.eventId}
+      <EventItem event={data.event} />
     </>
   );
 }
 
 export default EventDetailPage;
+
+// 리액트 훅에는 접근할 수 없고 라우터에서 받아오는 객체를 매개변수로 받는다
+export async function loader({request, params}) {
+  const id = params.eventId;
+const response = await fetch('http://localhost:8080/events' + id);
+ if(!response.ok) {
+throw json({message: 'Could not fetch details form selected events'}, {status: 500})
+ } else {
+  return response
+ }
+} 

@@ -15,7 +15,7 @@ function Root() {
     <>
       <MainNavigation />
       <main>
-        {navigation === 'loading' && <p>Loading</p>}
+        {/* {navigation === 'loading' && <p>Loading</p>} */}
         <Outlet />
       </main>
     </>

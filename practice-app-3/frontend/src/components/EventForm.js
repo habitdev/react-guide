@@ -10,7 +10,7 @@ function EventForm({ method, event }) {
 
   return (
     // 리약트에서 제공하는 Form태그
-    <Form method='post' className={classes.form}>
+    <Form method='post' /* action="/any-other-path"*/ className={classes.form}>
       <p>
         <label htmlFor='title'>Title</label>
         <input

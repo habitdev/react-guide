@@ -46,9 +46,16 @@ const router = createBrowserRouter([
             element: <EventsPage />,
             loader: eventsLoader,
           },
-          { path: ':eventId', element: <EventDetailPage />, loader: eventDetailLoader },
+          {
+            path: ':eventId',
+            id: 'event-detail', // eventDetailLoader을 공용으로 사용하면 children의 페이지들에서 찾을 수 가 없으므로(useLoaderData의 상위가 해당 페이지이므로) 특별한 임의의 아이디를 부여해야 한다.
+            loader: eventDetailLoader,
+            children: [
+              { index: true, element: <EventDetailPage /> },
+              { path: 'edit', element: <EditEventPage /> },
+            ],
+          },
           { path: 'new', element: <NewEventPage /> },
-          { path: ':eventId/edit', element: <EditEventPage /> },
         ],
       },
     ],

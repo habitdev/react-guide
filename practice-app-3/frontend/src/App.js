@@ -26,6 +26,7 @@ import EventsPage, { loader as eventsLoader } from './page/EventsPage';
 import EventDetailPage from './page/EventDetailPage';
 import NewEventPage from './page/NewEventPage';
 import EditEventPage from './page/EditEventPage';
+import ErrorPage from './page/Error';
 import Root from './page/Root';
 import EventRoot from './page/EventRoot';
 
@@ -33,6 +34,7 @@ const router = createBrowserRouter([
   {
     path: '/',
     element: <Root />, // wrapper 역할
+    errorElement: <ErrorPage />,
     children: [
       { index: true, element: <HomePage /> },
       {

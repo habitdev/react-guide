@@ -34,7 +34,11 @@ export async function loader() {
   const response = await fetch('http://localhost:8080/events');
 
   if (!response.ok) {
-    return { isError: true, message: 'Could not fetch events' };
+    // return { isError: true, message: 'Could not fetch events' };
+    // throw new Error();
+    // 오류가 생기면 리액트 라우터는 가장 가까운 오류 요소에 접근한다
+    //  errorElement: <ErrorPage />,
+    throw { message: 'Could not fetch events' };
   } else {
     return response;
   }

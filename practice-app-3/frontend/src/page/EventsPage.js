@@ -34,7 +34,7 @@ export default EventsPage;
 // loader는 메뉴를 이동하기 시작할 때 호출된다
 // 브라우저에서 실행된다
 
-async function loadEvent() {
+async function loadEvents() {
   // 브라우저에서 실행되므로 브라우저 API를 사용할 수 있다
   const response = await fetch('http://localhost:8080/events');
 
@@ -62,6 +62,6 @@ export function loader() {
   // defer({이 페이지에서 오갈 수 있는 모든 http요청을 넣는다})
   // defer:  페이지가 모두 로드된 후에 해당 외부 스크립트가 실행됨을 명시합니다.
   return defer({
-    events: loadEvent(),
+    events: loadEvents(),
   });
 }

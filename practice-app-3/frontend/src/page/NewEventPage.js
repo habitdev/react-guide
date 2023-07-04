@@ -7,7 +7,7 @@ function NewEventPage() {
     event.preventDefault();
     navigation('')
   } */
-  return <EventForm />;
+  return <EventForm method="post"/>;
 }
 
 export default NewEventPage;

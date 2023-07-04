@@ -6,7 +6,7 @@ function EditEventPage() {
   const data = useRouteLoaderData('event-detail');
   // 공용 loader에서 데이터 받아오기
 
-  return <EventForm event={data.event} />;
+  return <EventForm method="patch" event={data.event} />;
 }
 
 export default EditEventPage;

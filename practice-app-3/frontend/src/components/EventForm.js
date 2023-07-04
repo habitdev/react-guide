@@ -1,4 +1,4 @@
-import { Form, useNavigate, useNavigation, useActionData } from 'react-router-dom';
+import { Form, useNavigate, useNavigation, useActionData, json, redirect } from 'react-router-dom';
 
 import classes from './EventForm.module.css';
 
@@ -16,7 +16,7 @@ function EventForm({ method, event }) {
   return (
     // 리약트에서 제공하는 Form태그
     <Form
-      method='post'
+      method={method}
       /* action="/any-other-path"*/ className={classes.form}
     >
       {data && data.errors && (
@@ -82,3 +82,43 @@ function EventForm({ method, event }) {
 }
 
 export default EventForm;
+
+export async function action({ request, params }) {
+  const method = request.method;
+  const data = await request.formData();
+
+  const eventData = {
+    title: data.get('title'),
+    image: data.get('image'),
+    date: data.get('date'),
+    description: data.get('description'),
+  };
+
+  let url = 'http://localhost:8080/events';
+  if (method === 'PATCH') {
+    // 소문자로 적으면 오류가 난다
+    // method는 대문자
+    const eventId = params.eventId;
+    url = 'http://localhost:8080/events/' + eventId;
+  }
+
+  const response = await fetch(url, {
+    method: method,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(eventData),
+  });
+
+  if (response.status === 422) {
+    // 백엔드에서 받은 응답을 return
+    // 리턴된 action은 loader와 마찬가지로 컴포넌트에서 사용할 수 있다
+    return response;
+  }
+
+  if (!response.ok) {
+    throw json({ message: 'Could not save event' }, { status: 500 });
+  }
+
+  return redirect('/events');
+}

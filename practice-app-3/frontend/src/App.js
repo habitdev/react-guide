@@ -24,11 +24,12 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import HomePage from './page/HomePage';
 import EventsPage, { loader as eventsLoader } from './page/EventsPage';
 import EventDetailPage, { loader as eventDetailLoader, action as deleteEvent } from './page/EventDetailPage';
-import NewEventPage, { action as newEventAction } from './page/NewEventPage';
+import NewEventPage from './page/NewEventPage';
 import EditEventPage from './page/EditEventPage';
 import ErrorPage from './page/Error';
 import Root from './page/Root';
 import EventRoot from './page/EventRoot';
+import { action as manipulateEventAction } from './components/EventForm';
 
 const router = createBrowserRouter([
   {
@@ -51,12 +52,24 @@ const router = createBrowserRouter([
             id: 'event-detail',
             loader: eventDetailLoader,
             children: [
-              { index: true, element: <EventDetailPage />, action: deleteEvent },
-              { path: 'edit', element: <EditEventPage /> },
+              {
+                index: true,
+                element: <EventDetailPage />,
+                action: deleteEvent,
+              },
+              {
+                path: 'edit',
+                element: <EditEventPage />,
+                action: manipulateEventAction,
+              },
             ],
           },
           // action프로퍼티는 함수를 받는다
-          { path: 'new', element: <NewEventPage />, action: newEventAction },
+          {
+            path: 'new',
+            element: <NewEventPage />,
+            action: manipulateEventAction,
+          },
         ],
       },
     ],

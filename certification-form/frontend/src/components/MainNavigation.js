@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router-dom';
+import { Form, NavLink } from 'react-router-dom';
 
 import classes from './MainNavigation.module.css';
 import NewsletterSignup from './NewsletterSignup';
@@ -10,10 +10,8 @@ function MainNavigation() {
         <ul className={classes.list}>
           <li>
             <NavLink
-              to="/"
-              className={({ isActive }) =>
-                isActive ? classes.active : undefined
-              }
+              to='/'
+              className={({ isActive }) => (isActive ? classes.active : undefined)}
               end
             >
               Home
@@ -21,33 +19,35 @@ function MainNavigation() {
           </li>
           <li>
             <NavLink
-              to="/events"
-              className={({ isActive }) =>
-                isActive ? classes.active : undefined
-              }
+              to='/events'
+              className={({ isActive }) => (isActive ? classes.active : undefined)}
             >
               Events
             </NavLink>
           </li>
           <li>
             <NavLink
-              to="/newsletter"
-              className={({ isActive }) =>
-                isActive ? classes.active : undefined
-              }
+              to='/newsletter'
+              className={({ isActive }) => (isActive ? classes.active : undefined)}
             >
               Newsletter
             </NavLink>
           </li>
           <li>
             <NavLink
-              to="/auth?mode=login"
-              className={({ isActive }) =>
-                isActive ? classes.active : undefined
-              }
+              to='/auth?mode=login'
+              className={({ isActive }) => (isActive ? classes.active : undefined)}
             >
               Authentication
             </NavLink>
+          </li>
+          <li>
+            <Form
+              action='/logout'
+              method='post'
+            >
+              <button type='submit'>Logout</button>
+            </Form>
           </li>
         </ul>
       </nav>

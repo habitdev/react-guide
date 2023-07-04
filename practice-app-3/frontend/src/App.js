@@ -30,11 +30,11 @@ import ErrorPage from './page/Error';
 import Root from './page/Root';
 import EventRoot from './page/EventRoot';
 import { action as manipulateEventAction } from './components/EventForm';
-
+import NewsletterPage, { action as newsletterAction } from './page/Newsletter';
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <Root />, // wrapper 역할
+    element: <Root />,
     errorElement: <ErrorPage />,
     children: [
       { index: true, element: <HomePage /> },
@@ -64,13 +64,17 @@ const router = createBrowserRouter([
               },
             ],
           },
-          // action프로퍼티는 함수를 받는다
           {
             path: 'new',
             element: <NewEventPage />,
             action: manipulateEventAction,
           },
         ],
+      },
+      {
+        path: 'newsletter',
+        element: <NewsletterPage />,
+        action: newsletterAction,
       },
     ],
   },

@@ -1,10 +1,19 @@
+import Head from 'next/head';
 import { useEffect, useState } from 'react';
 import { MongoClient } from 'mongodb';
 
 import MeetupList from '../components/meetups/MeetupList';
 
 function HomePage(props) {
-  return <MeetupList meetups={props.meetups} />;
+  return (
+    <>
+      <Head>
+        <title>React Meetups</title>
+        <meta name="description" content="Browse a huge list of highly active React meetups" />
+      </Head>
+      <MeetupList meetups={props.meetups} />
+    </>
+  );
 }
 
 // pages폴더 안에 있는 페이지들만 가능한 특수함수

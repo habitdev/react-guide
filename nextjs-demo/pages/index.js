@@ -1,23 +1,7 @@
 import { useEffect, useState } from 'react';
+import { MongoClient } from 'mongodb';
+
 import MeetupList from '../components/meetups/MeetupList';
-const DUMMY_MEETUPS = [
-  {
-    id: 'm1',
-    title: 'meetup 111',
-    image:
-      'https://velog.velcdn.com/images/shinychan95/post/25fe1724-685d-423a-a838-8855a3453939/NodejsReact.jpg',
-    address: 'some address 12345',
-    description: 'first meetup!',
-  },
-  {
-    id: 'm2',
-    title: 'meetup 222',
-    image:
-      'https://velog.velcdn.com/images/shinychan95/post/25fe1724-685d-423a-a838-8855a3453939/NodejsReact.jpg',
-    address: 'some address 12345',
-    description: 'second meetup!',
-  },
-];
 
 function HomePage(props) {
   return <MeetupList meetups={props.meetups} />;
@@ -29,9 +13,24 @@ function HomePage(props) {
 export async function getStaticProps() {
   // return { props: {} }; //항상 객체를 반환해야 한다 // props는 항상 props여야 한다
   // 이 props가 위의 컴포넌트에서 받아들이는 props가 된다
+  const client = await MongoClient.connect(
+    'mongodb+srv://mgo-react:PQ3IgTHH5IWe91YP@cluster0.eukvctn.mongodb.net/?retryWrites=true&w=majority'
+  );
+  const db = client.db();
+  const meetupsCollection = db.collection('meetups');
+
+  const meetups = await meetupsCollection.find().toArray();
+  client.close();
+
   return {
     props: {
-      meetups: DUMMY_MEETUPS,
+      meetups: meetups.map((meetup) => ({
+        title: meetup.title,
+        image: meetup.image,
+        address: meetup.address,
+        description: meetup.description,
+        id: meetup._id.toString(),
+      })),
     },
     revalidate: 10,
     // 점진적 정적 생성

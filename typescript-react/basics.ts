@@ -31,3 +31,14 @@ let people: {
 	name: string;
 	age: number;
 }[]; // 객체 배열
+
+
+
+let course = 'React'; // string으로 타입을 인식
+// course = 123456; // 오류
+
+
+// 유니온 타입
+// 타입을 정의할 때 한개 이상의 타입을 사용할 수 있다
+let study: string | number = 'React';
+study = 123456;

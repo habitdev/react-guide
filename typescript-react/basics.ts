@@ -12,3 +12,22 @@ userName = 'Max';
 let isIn: boolean = false;
 
 // let hobbies: null;
+
+// 자료형
+let hobbies: string[]; // 문자열 배열
+hobbies = ['st', 'ring'];
+
+let person: {
+	name: string;
+	age: number;
+};
+
+person = {
+	name: 'max',
+	age: 45,
+};
+
+let people: {
+	name: string;
+	age: number;
+}[]; // 객체 배열

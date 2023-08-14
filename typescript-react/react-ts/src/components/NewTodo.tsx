@@ -1,5 +1,6 @@
 import { type } from 'os';
 import React, { useRef } from 'react';
+import classes from './NewTodo.module.css';
 
 type newTodos = {
 	onAddTodo: (text: string) => void;
@@ -20,7 +21,7 @@ function NewTodo({ onAddTodo }: newTodos) {
 	};
 
 	return (
-		<form onSubmit={submitHandler}>
+		<form onSubmit={submitHandler} className={classes.form}>
 			<label htmlFor='text'>Todo text</label>
 			<input
 				type='text'

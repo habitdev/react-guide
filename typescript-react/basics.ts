@@ -18,9 +18,9 @@ let hobbies: string[]; // 문자열 배열
 hobbies = ['st', 'ring'];
 
 type Person = {
-  name: string;
+	name: string;
 	age: number;
-}
+};
 
 let person: Person;
 
@@ -31,15 +31,34 @@ person = {
 
 let people: Person[]; // 객체 배열
 
-
-
 let course = 'React'; // string으로 타입을 인식
 // course = 123456; // 오류
-
 
 // 유니온 타입
 // 타입을 정의할 때 한개 이상의 타입을 사용할 수 있다
 let study: string | number = 'React';
 study = 123456;
 
-// 
+// Functions & types
+
+function add(a: number, b: number): number {
+	return a + b;
+}
+
+function printOutPut(value: any): void {
+	console.log(value);
+}
+
+// void 는 null 과 undefined와 같지만 항상 function(함수)과 결합해서 사용한다는 특징이 있다
+
+// Generics
+function insertAtBeginning(array: any[], value: any) {
+	const newArray = [value, ...array];
+	return newArray;
+}
+const demoArray = [1,2,3];
+const updateArray = insertAtBeginning(demoArray, -1);
+// updateArray[0].split(''); // 오류가 안난다
+// 이를 인식할 수 있도록 제너릭 기능을 이용한다
+
+

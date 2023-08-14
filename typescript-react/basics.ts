@@ -17,20 +17,19 @@ let isIn: boolean = false;
 let hobbies: string[]; // 문자열 배열
 hobbies = ['st', 'ring'];
 
-let person: {
-	name: string;
+type Person = {
+  name: string;
 	age: number;
-};
+}
+
+let person: Person;
 
 person = {
 	name: 'max',
 	age: 45,
 };
 
-let people: {
-	name: string;
-	age: number;
-}[]; // 객체 배열
+let people: Person[]; // 객체 배열
 
 
 
@@ -42,3 +41,5 @@ let course = 'React'; // string으로 타입을 인식
 // 타입을 정의할 때 한개 이상의 타입을 사용할 수 있다
 let study: string | number = 'React';
 study = 123456;
+
+// 

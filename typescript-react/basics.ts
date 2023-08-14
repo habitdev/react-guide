@@ -52,13 +52,12 @@ function printOutPut(value: any): void {
 // void 는 null 과 undefined와 같지만 항상 function(함수)과 결합해서 사용한다는 특징이 있다
 
 // Generics
-function insertAtBeginning(array: any[], value: any) {
+function insertAtBeginning<T>(array: T[], value: T) {
 	const newArray = [value, ...array];
 	return newArray;
 }
-const demoArray = [1,2,3];
+const demoArray = [1, 2, 3];
 const updateArray = insertAtBeginning(demoArray, -1);
+const stringArray = insertAtBeginning(['a', 'b', 'c'], 'd');
 // updateArray[0].split(''); // 오류가 안난다
 // 이를 인식할 수 있도록 제너릭 기능을 이용한다
-
-

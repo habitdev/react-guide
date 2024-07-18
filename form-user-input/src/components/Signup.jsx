@@ -1,4 +1,7 @@
+import { useState } from 'react';
+
 export default function Signup() {
+  const [passwordAreNotEqual, setPasswordAreNotEqual] = useState(false);
   function handleSubmit(event) {
     event.preventDefault();
 
@@ -11,6 +14,12 @@ export default function Signup() {
     formDatas.entries()로는 같은 이름을 가진 input(checkbox, radio)는 가져오지 않는다
     따라서, `formDatas.getAll('acquisition')`와 같이 해당 input만 따로 받아와서 합쳐준다.
      */
+
+    if (data.password !== data['confirm-password']) {
+      setPasswordAreNotEqual(true);
+
+      return;
+    }
     console.log(data);
     event.target.reset();
   }
@@ -26,6 +35,7 @@ export default function Signup() {
           id='email'
           type='email'
           name='email'
+          required
         />
       </div>
 
@@ -36,6 +46,7 @@ export default function Signup() {
             id='password'
             type='password'
             name='password'
+            required
           />
         </div>
 
@@ -45,7 +56,11 @@ export default function Signup() {
             id='confirm-password'
             type='password'
             name='confirm-password'
+            required
           />
+          <div className='control-error'>
+            {passwordAreNotEqual && <p>Password must match.</p>}
+          </div>
         </div>
       </div>
 
@@ -58,6 +73,7 @@ export default function Signup() {
             type='text'
             id='first-name'
             name='first-name'
+            required
           />
         </div>
 
@@ -67,6 +83,7 @@ export default function Signup() {
             type='text'
             id='last-name'
             name='last-name'
+            required
           />
         </div>
       </div>
@@ -76,6 +93,7 @@ export default function Signup() {
         <select
           id='role'
           name='role'
+          required
         >
           <option value='student'>Student</option>
           <option value='teacher'>Teacher</option>
@@ -124,6 +142,7 @@ export default function Signup() {
             type='checkbox'
             id='terms-and-conditions'
             name='terms'
+            required
           />
           I agree to the terms and conditions
         </label>

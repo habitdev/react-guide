@@ -15,6 +15,8 @@ export default function Login() {
 
   function handleSubmit(event) {
     event.preventDefault();
+    // 입력이 없는 경우 유효성 검사 추가 해야함
+    console.log(enteredValues);
   }
 
   function handleInputChange(identifier, value) {

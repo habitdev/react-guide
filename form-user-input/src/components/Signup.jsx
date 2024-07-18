@@ -12,6 +12,7 @@ export default function Signup() {
     따라서, `formDatas.getAll('acquisition')`와 같이 해당 input만 따로 받아와서 합쳐준다.
      */
     console.log(data);
+    event.target.reset();
   }
 
   return (

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import Modal from '../../../http-request/src/components/Modal';
-import CartList from './CartList';
+import Modal from '../../../../http-request/src/components/Modal';
 import MealItem from './MealItem';
+import Cart from '../cart/Cart';
 
 export default function Meals() {
   const [loadedMeals, setLoadedMeals] = useState(false);
@@ -37,7 +37,7 @@ export default function Meals() {
         open={isModalOpen}
         onClose={handleCloseCart}
       >
-        <CartList />
+        <Cart />
         <div className='cart-item-actions'>
           <button type='button'>Close</button>
           <button

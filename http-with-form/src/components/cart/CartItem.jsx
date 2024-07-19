@@ -1,4 +1,4 @@
-export default function Cart({ name, price }) {
+export default function CartItem({ name, price }) {
   return (
     <div className='cart-item'>
       <p>메뉴명</p>

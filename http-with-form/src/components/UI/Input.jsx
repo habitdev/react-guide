@@ -1,12 +1,13 @@
-export default function Input({ label, id, ...props }) {
+export default function Input({ label, id, error, ...props }) {
   return (
-    <p className='control'>
+    <div className='control'>
       <label htmlFor={id}>{label}</label>
       <input
         id={id}
         name={id}
         {...props}
       />
-    </p>
+      {error && <p className='control-error'>{error}</p>}
+    </div>
   );
 }

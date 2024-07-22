@@ -5,6 +5,7 @@ import Button from '../UI/Button';
 import Modal from '../UI/Modal';
 import UserProgressContext from '../../context/UserProgressContext';
 import CartContext from '../../context/CartContext';
+import { returnEmpty } from '../../util/validation';
 
 export default function CartModal() {
   const cartCtx = useContext(CartContext);
@@ -28,7 +29,9 @@ export default function CartModal() {
     <Modal
       className='cart'
       open={userProgressCtx.progress === 'cart'}
-      onClose={userProgressCtx.progress === 'cart' ? handleCloseCart : ''}
+      onClose={
+        userProgressCtx.progress === 'cart' ? handleCloseCart : returnEmpty
+      }
     >
       <h2>Your Cart</h2>
       <Cart cartItems={cartItems} />
@@ -40,7 +43,7 @@ export default function CartModal() {
         >
           Close
         </Button>
-        {cartItems.length !== 0 && (
+        {cartItems.length > 0 && (
           <Button onClick={handleGoToCheckout}>Go to Checkout</Button>
         )}
       </p>

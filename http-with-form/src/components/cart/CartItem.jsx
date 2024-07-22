@@ -1,8 +1,22 @@
-export default function CartItem({ name, price }) {
+import { currencyFormatter } from '../../util/formatting';
+
+export default function CartItem({
+  name,
+  quantity,
+  price,
+  onIncrease,
+  onDecrease,
+}) {
   return (
     <div className='cart-item'>
-      <p>메뉴명</p>
-      {/* <div className='cart-item-actions'></div> */}
+      <p>
+        {name} - {currencyFormatter.format(quantity * price)}
+      </p>
+      <p className='cart-item-actions'>
+        <button onClick={onDecrease}>-</button>
+        <span>{quantity}</span>
+        <button onClick={onIncrease}>+</button>
+      </p>
     </div>
   );
 }

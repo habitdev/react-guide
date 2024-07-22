@@ -1,16 +1,9 @@
 import { useEffect, useState } from 'react';
-import Modal from '../../../../http-request/src/components/Modal';
 import MealItem from './MealItem';
-import Cart from '../cart/Cart';
 
 export default function Meals() {
   const [loadedMeals, setLoadedMeals] = useState(false);
   const [meals, setMeals] = useState([]);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  function handleCloseCart() {
-    setIsModalOpen(false);
-  }
 
   useEffect(() => {
     async function fetchMeals() {
@@ -33,21 +26,6 @@ export default function Meals() {
   }, []);
   return (
     <>
-      <Modal
-        open={isModalOpen}
-        onClose={handleCloseCart}
-      >
-        <Cart />
-        <div className='cart-item-actions'>
-          <button type='button'>Close</button>
-          <button
-            type='button'
-            className='button'
-          >
-            Go to Checkout
-          </button>
-        </div>
-      </Modal>
       {loadedMeals && (
         <ul id='meals'>
           {meals.map((meal) => (

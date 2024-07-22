@@ -1,19 +1,24 @@
 import { useContext } from 'react';
-import CartContext from '../../context/CartContext';
 import CartItem from './CartItem';
+import CartContext from '../../context/CartContext';
 
-export default function Cart() {
+export default function Cart({ cartItems }) {
   const cartCtx = useContext(CartContext);
-  const datas = cartCtx.item;
 
   return (
-    <div className='cart'>
-      {datas.map((data) => (
-        <CartItem
-          name={data.name}
-          // price={price}
-        />
+    <ul className='cart-list'>
+      {cartItems.map((item) => (
+        <li key={item.id}>
+          <CartItem
+            name={item.name}
+            quantity={item.quantity}
+            price={item.price}
+            onIncrease={() => cartCtx.addItem(item)}
+            onDecrease={() => cartCtx.removeItem(item.id)}
+            // {...item}
+          />
+        </li>
       ))}
-    </div>
+    </ul>
   );
 }

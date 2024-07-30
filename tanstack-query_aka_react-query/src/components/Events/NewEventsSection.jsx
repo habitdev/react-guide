@@ -19,6 +19,8 @@ export default function NewEventsSection() {
   staleTime: 캐시에 데이터가 있을 때 업데이트된데이터를 가져오기 위한 요청을 자체적으로 전송하기 전에 얼마나 기다릴 지 설정하는 것 (기본값: 0)
   staleTime으로 설정한 시간 안에 다시 요청하면 요청을 전송하지 않는다(ex: 5초 설정 후 5초 안에 새로고침)
   gcTime: 가비지 타임: 데이터와 캐시를 얼마나 보관할지 제어 (기본값: 5분)
+  signal: AbortSignal 을 의미 (GET 요청 시 네트워크 요청을 중간에 중단시킬 수 있는 장치)
+          - 대용량 fetching 이 있는 경우 또는 Optimistic UI 를 구현할 때처럼 필요한 경우에만 적용하는 것을 권장  
    */
   const { data, isPending, isError, error } = useQuery({
     queryFn: fetchEvents,

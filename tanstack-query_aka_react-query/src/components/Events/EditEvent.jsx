@@ -2,6 +2,7 @@ import {
   Link,
   redirect,
   useNavigate,
+  useNavigation,
   useParams,
   useSubmit,
 } from 'react-router-dom';
@@ -15,6 +16,7 @@ import LoadingIndicator from '../UI/LoadingIndicator.jsx';
 
 export default function EditEvent() {
   const navigate = useNavigate();
+  const { state } = useNavigation();
   const submit = useSubmit();
   const params = useParams();
 
@@ -24,6 +26,7 @@ export default function EditEvent() {
     queryKey: ['events', { id: params.id }], // detail과 같아서 detail에서 얻은 데이터(캐시)를 가져온다
     // 따라서, edit 안의 내용이 바로 보여진다
     queryFn: ({ signal }) => fetchEvent({ signal, id: params.id }),
+    staleTime: 10000, // loader와 중복되므로 일정 시간 이후에도 불러오지 못하면 실행하게 한다
   });
 
   /* const {
@@ -116,18 +119,24 @@ export default function EditEvent() {
         inputData={data}
         onSubmit={handleSubmit}
       >
-        <Link
-          to='../'
-          className='button-text'
-        >
-          Cancel
-        </Link>
-        <button
-          type='submit'
-          className='button'
-        >
-          Update
-        </button>
+        {state === 'submitting' ? (
+          <p>Sending data...</p>
+        ) : (
+          <>
+            <Link
+              to='../'
+              className='button-text'
+            >
+              Cancel
+            </Link>
+            <button
+              type='submit'
+              className='button'
+            >
+              Update
+            </button>
+          </>
+        )}
       </EventForm>
     );
   }

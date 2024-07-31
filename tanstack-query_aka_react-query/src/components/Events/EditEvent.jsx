@@ -33,13 +33,37 @@ export default function EditEvent() {
         // 프로미스를 반환하므로 await를 사용해야 한다
         queryKey: ['events', { id: params.id }],
       });
+
+      // 이전 데이터 저장
+      const prevEvent = queryClient.getQueryData(['events', { id: params.id }]);
+
       // ['events', { id: params.id }]로 활성화된 모든 쿼리를 취소하여
       // 해당 쿼리의 응답 데이터와 캐시에 업데이트한 데이터가 충돌되지 않게 한다
       queryClient.setQueriesData(['events', { id: params.id }], newEvent); // 저장된 캐시 데이터를 newEvent의 정보로 직접 수정
       // queryClient.setQueriesData(['events', { id: params.id }])
       // 수정하려는 쿼리의 키와 해당 쿼리 키에 저장하려는 데이터를 입력
+      // 캐시는 수정되도 백엔드의 데이터는 수정되지 않았을 수 있다
+
+      return { prevEvent };
+    },
+    onError: (error, data, context) => {
+      // context: 이전 데이터를 포함한다 (이전 데이터를 받을 수 있게 하려면 onMutate에서 return을 해줘야 한다)
+      // console.log(prevEvent);
+      // 이전 데이터로 재설정
+      queryClient.setQueryData(
+        ['events', { id: params.id }],
+        context.prevEvent
+      );
+    },
+    onSettled: () => {
+      // onMutate가 끝날 때마다 호출
+      // 성공/실패 상관X
+      // 캐싱된 쿼리를 무효화
+      queryClient.invalidateQueries(['events', { id: params.id }]);
     },
   });
+
+  // 이렇게 하면 로딩 스피너 없이 페이지에 바로 적용된다
 
   function handleSubmit(formData) {
     mutate({ id: params.id, event: formData });

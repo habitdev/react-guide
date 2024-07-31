@@ -1,4 +1,10 @@
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import {
+  Link,
+  redirect,
+  useNavigate,
+  useParams,
+  useSubmit,
+} from 'react-router-dom';
 
 import Modal from '../UI/Modal.jsx';
 import EventForm from './EventForm.jsx';
@@ -9,8 +15,10 @@ import LoadingIndicator from '../UI/LoadingIndicator.jsx';
 
 export default function EditEvent() {
   const navigate = useNavigate();
+  const submit = useSubmit();
   const params = useParams();
 
+  // ⭐ 리액트 라우터의 loader로 불러왔어도 컴포넌트 안에 넣어두는 게 좋다
   // 기존 정보 받아오기
   const { data, isPending, isError, error } = useQuery({
     queryKey: ['events', { id: params.id }], // detail과 같아서 detail에서 얻은 데이터(캐시)를 가져온다
@@ -18,11 +26,8 @@ export default function EditEvent() {
     queryFn: ({ signal }) => fetchEvent({ signal, id: params.id }),
   });
 
-  const {
+  /* const {
     mutate,
-    // isPending: isPendingUpdating,
-    // isError: isErrorUpdating,
-    // error: errorUpdating,
   } = useMutation({
     mutationFn: updateEvent,
     onMutate: async (data) => {
@@ -61,13 +66,14 @@ export default function EditEvent() {
       // 캐싱된 쿼리를 무효화
       queryClient.invalidateQueries(['events', { id: params.id }]);
     },
-  });
+  }); */
 
   // 이렇게 하면 로딩 스피너 없이 페이지에 바로 적용된다
 
   function handleSubmit(formData) {
-    mutate({ id: params.id, event: formData });
-    navigate('../');
+    /* mutate({ id: params.id, event: formData });
+    navigate('../'); */
+    submit(formData, { method: 'PUT' });
   }
 
   function handleClose() {
@@ -75,13 +81,13 @@ export default function EditEvent() {
   }
 
   let content;
-  if (isPending) {
+  /* if (isPending) {
     content = (
       <div className='center'>
         <LoadingIndicator />
       </div>
     );
-  }
+  } */
   if (isError) {
     content = (
       <>
@@ -127,4 +133,20 @@ export default function EditEvent() {
   }
 
   return <Modal onClose={handleClose}>{content}</Modal>;
+}
+
+export function loader({ params }) {
+  return queryClient.fetchQuery({
+    queryKey: ['events', { id: params.id }],
+    queryFn: ({ signal }) => fetchEvent({ signal, id: params.id }),
+  });
+}
+
+export async function action({ request, params }) {
+  const formData = await request.formData();
+  const updatedEventData = Object.fromEntries(formData);
+  await updateEvent({ id: params.id, event: updatedEventData });
+  await queryClient.invalidateQueries(['events']);
+
+  return redirect('../');
 }

@@ -23,8 +23,10 @@ export default function NewEventsSection() {
           - 대용량 fetching 이 있는 경우 또는 Optimistic UI 를 구현할 때처럼 필요한 경우에만 적용하는 것을 권장  
    */
   const { data, isPending, isError, error } = useQuery({
-    queryFn: fetchEvents,
-    queryKey: ['events'],
+    queryKey: ['events', { max: 3 }],
+    queryFn: ({ signal, queryKey }) => fetchEvents({ signal, ...queryKey[1] }),
+    // queryFn는 queryKey의 정보도 가져오므로 같은 정보를 제공하는 것보다
+    // ...queryKey[1]와 같이 전달할 정보만 queryKey에서 받아와 spread해서 전달한다
     staleTime: 5000,
   });
   let content;
